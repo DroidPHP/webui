@@ -1,0 +1,60 @@
+{% extends 'layout.twig' %}
+{% block title %}All Configuration{% endblock %}
+
+{% block body %}
+
+<div class="span10">
+    <div class="row-fluid">
+        <div class="span12 box">
+            <div class="box-head">
+                <h3>All Configurations</h3>
+            </div>
+            <div class="box-content">
+                <div class="content-inner">
+                    <div class="marg20-btm">
+                        <!--a href="/conf/new" class="btn btn-primary">+ Add New Configuration</a-->
+                    </div>
+                        
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Location</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+			{% for list in conf %}
+                                <tr class="conf">
+                                    <td>{{ list.type }}</td>
+                                    <td>{{ list.location }}</td>
+                                    <td>
+									{#{ student.status_html|raw }#}
+                                            <a href="/conf/edit?file={{ list.location }}" rel="tooltip" class="btn btn-primary" data-original-title="Edit"><i class="icon-edit"></i></a>
+                                            <a href="#" rel="tooltip" data-file="{{ list.location }}" class="btn btn-danger remove-conf"  data-original-title="Delete"><i class="icon-trash"></i></a>
+                                            <a href="/conf/download?file={{ list.location }}" rel="tooltip" class="btn btn-success"  data-original-title="Download"><i class="icon-eye-open"></i></a>
+                                        </td>
+                                    </tr>
+                        {% endfor %}
+                                </tbody>
+                            </table>
+                            <!--
+                            <div class="pagination">
+                              <ul>
+                                <li class="disabled"><a href="#">«</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">»</a></li>
+                              </ul>
+                            </div>
+                            -->
+                        </div><!-- content-inner -->
+                    </div>
+                </div>
+            </div> <!-- end row -->
+
+        </div>
+
+{% endblock %}

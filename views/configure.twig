@@ -1,0 +1,52 @@
+{% extends 'layout.twig' %}
+{% block title %} Edit Configuation {% endblock %}
+
+{% block body %}
+
+<div class="span10">
+    <!-- standard -->
+    <link rel="stylesheet" href="{{ baseurl }}/web/codemirror/lib/codemirror.css">
+    <script src="{{ baseurl }}/web/codemirror/lib/codemirror.js"></script>
+    <script src="{{ baseurl }}/web/codemirror/lib/util/searchcursor.js"></script>
+    <script src="{{ baseurl }}/web/codemirror/lib/util/match-highlighter.js"></script>
+
+    <style type="text/css">
+            .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
+            .activeline {background: #e8f2ff !important;}
+        </style>
+
+        <div class="row-fluid">
+            <div class="span12 box">
+                <div class="box-head">
+                    <h3>Edit configuration ({{ name }}) </h3>
+                </div>
+                <div class="box-content">
+                    <div class="content-inner">
+                        <form method="post"><textarea id="code" name="content">{{ content }}</textarea>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <a href="/" class="btn">Cancel</a>
+                            </div></form>
+
+                    </div><!-- content-inner -->
+                </div>
+            </div>
+        </div> <!-- end row -->
+        <!-- end of standard -->
+        <script>
+            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                lineNumbers: true,
+                lineWrapping: true,
+                onCursorActivity: function() {
+                    editor.matchHighlight("CodeMirror-matchhighlight");
+                    editor.setLineClass(hlLine, null, null);
+                    hlLine = editor.setLineClass(editor.getCursor().line, null, "activeline");
+                }
+            });
+            var hlLine = editor.setLineClass(0, "activeline");
+            </script>
+            <!-- staff -->
+            <!-- end of staff -->
+        </div> 
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'layout.twig' %}
+{% block title %} Error {% endblock %}
+
+{% block body %}
+<div class="span10">
+    <div class="alert alert-error">
+        <strong>Oops!</strong> {{ message }}
+    </div>
+    <hr>
+</div>
+{% endblock %}

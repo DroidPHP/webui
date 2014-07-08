@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]--><!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]--><!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]--><!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--> 
+<html lang="en"><!--<![endif]--> 
+    <head>
+        <meta charset="utf-8">
+        <title>DroidPHP | Web UI</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Le styles -->
+        <link href="{{ baseurl }}/web/css/bootstrap.css" rel="stylesheet">
+        <link href="{{ baseurl }}/web/css/style.css" rel="stylesheet">
+        <link href="{{ baseurl }}/web/css/bootstrap-responsive.css" rel="stylesheet">
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Le fav and touch icons -->
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="{{ baseurl }}/web/img/favicon.ico" type="image/x-icon">
+    </head>
+
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="/"><img style="height: 35px; width:50px;" src="{{ baseurl }}/web/img/ic_launcher.png" />DroidPHP</a>
+                    <div class="nav-collapse">
+
+                        <!--
+                        <ul class="nav pull-right">
+                            <li class="divider-vertical"></li>
+                            <li><a data-toggle="modal" href="#notif"><i class="icon-white icon-info-sign"></i> Notification <span class="badge badge-warning">4</span></a></li>
+                            <li class="divider-vertical"></li>
+                            
+                            <li><a href="#help"><i class="icon-white icon-question-sign"></i> Help</a></li>
+                            <li class="divider-vertical"></li>
+                            <li class="gravatar"><a href="/profile"></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.conf.site_admin }} <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/settings"><i class="icon-user"></i> Settings</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="/logout"><i class="icon-off"></i> Sign Out</a></li>
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                        -->
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+     {% include 'notification.twig' %}
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <!-- sidebars -->
+		{% include 'sidebar/main_menu.twig' %}
+                <!-- end of sidebars -->
+      {% block body %}{% endblock %}
+
+
+            </div><!--/row-->
+
+            <hr class="alt">
+
+            <footer>
+                <p><a href="http://github.com/droidphp">DroidPHP</a></p>
+            </footer>
+
+        </div><!--/.fluid-container-->
+
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="{{ baseurl }}/web/js/jquery-1.7.2.min.js"></script>
+        <script src="{{ baseurl }}/web/js/bootstrap.min.js"></script>
+
+        <script type="text/javascript">
+$(document).ready(function() { 
+    
+    $("[rel=popover]").popover();
+    
+    $("[rel=tooltip]").tooltip();
+    
+    $('.check-all').click(
+            function(){
+                $(this).parent().parent().parent().parent().find("input[type='checkbox']").attr('checked', $(this).is(':checked'));   
+            }
+        );
+        
+    $('#select-all').click(function(event) {   
+    if(this.checked) {
+        // Iterate each checkbox
+        $(':checkbox').each(function() {
+            this.checked = true;                        
+        });
+    }
+});
+    
+});
+
+            $(document).ready(function() {
+
+
+                $("#settings").submit(function() {
+
+                    //if (checkAllFields()) {
+
+                    var server_daemon = $('#server_httpd').val();
+
+                    var server_port = $('#server_port').val();
+                    var mysql_username = $('#mysql_username').val();
+                    var mysql_password = $('#mysql_password').val();
+                    var enable_su;
+                    $('#enable_su').is(':checked') ? enable_su = "true" : enable_su = "false";
+                    var auto_start;
+                    $('#enable_app_startup').is(':checked') ? auto_start = "true" : auto_start = "false";
+                    var system_start;
+                    $('#enable_system_startup').is(':checked') ? system_start = "true" : system_start = "false";
+                    var enable_wifiLock;
+                    $('#enable_wifi_lock').is(':checked') ? enable_wifiLock = "true" : enable_wifiLock = "false";
+                    var enable_screenLock;
+                    $('#enable_screen_lock').is(':checked') ? enable_screenLock = "true" : enable_screenLock = "false";
+                    //$('.result').css('display', 'none');
+                    var postVaule = {
+                        daemon: server_daemon,
+                        port: server_port,
+                        mysql_username: mysql_username,
+                        mysql_password: mysql_password,
+                        enable_su: enable_su,
+                        enable_app_startup: auto_start,
+                        enable_system_startup: system_start,
+                        enable_wifiLock: enable_wifiLock,
+                        enable_screenLock: enable_screenLock
+                    };
+
+                    $.getJSON('/preference/update', postVaule, function(data) {
+
+                        $('#notify').removeClass('hidden');
+                        $('#notify').html("<strong>Infomartion</strong> " + data.message + "</div>");
+                        window.location = '#notify';
+                    });
+
+                });
+
+                function checkAllFields() {
+                    var port = $('#port').val();
+                    if ($('#enable_root_func').is(':checked')) {
+                        if (port < 2 || port > 65535 || !isNumber(port)) {
+                            alert('Wrong port number!');
+                            return false;
+                        }
+                    } else {
+                        if (port < 1024 || port > 65535 || !isNumber(port)) {
+                            alert('Wrong port number!');
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
+                function isNumber(number) {
+                    if (number == 0)
+                        return true;
+                    return res = (number / number) ? true : false;
+                }
+
+
+            });
+ 				$('.remove-conf').click(function() {
+                    var file = $(this).attr('data-file');
+                    var confirm_remove = confirm('Sure to delete this configration ?');
+                    if (!confirm_remove) {
+                        return false;
+                    }
+                    $.getJSON("/conf/delete?file=" + file, function(json) {
+
+                        if (json.status == 'true') {
+                            window.location = '/conf/list';
+                        }
+                    });
+                });
+            </script>
+            </body>
+        </html>

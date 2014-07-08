@@ -1,0 +1,110 @@
+{% extends 'layout.twig' %}
+{% block title %} Settings {% endblock %}
+
+{% block body %}
+
+<div class="span10">
+    <div class="row-fluid">
+        <div class="span12 box">
+            <div class="box-head">
+                <h3><i class="icon-white icon-user"></i> Settings</h3>
+            </div>
+            <div id="notify" class="hidden alert alert-heading">
+            </div>
+            <div class="box-content">
+                <div class="content-inner">
+                    <div class="content-settings">
+                        <div class="tabbable"> <!-- Only required for left/right tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#profile" data-toggle="tab">Server</a></li>
+                                <!--li class=""><a href="#password" data-toggle="tab">Password</a></li-->
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="profile"><!-- Profile -->
+                                    <div class="row-fluid">
+                                        <div class="span10">
+                                            <form id="settings" class="form-horizontal" action="javascript:;">
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Choose HTTPD</label>
+                                                    <div class="controls">
+                                                        <select type="text" id="server_httpd" class="input-xlarge">
+
+                                                            <option {% if pref.use_server_httpd == 'lighttpd' %} selected="true" {% endif %} value="lighttpd">LIGHTTPD</option>
+                                                            <option {% if pref.use_server_httpd == 'nginx' %} selected="true" {% endif %} value="nginx">NGINX</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Server PORT</label>
+                                                    <div class="controls">
+                                                        <input type="text" id="server_port" class="input-xlarge" value="{{ pref.server_port }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">MySQL Username</label>
+                                                    <div class="controls">
+                                                        <input type="text" id="mysql_username" class="input-xlarge" value="{{ pref.mysql_username }}">
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">MySQL Password</label>
+                                                    <div class="controls">
+                                                        <input type="text" id="mysql_password" class="input-xlarge" value="{{ pref.mysql_password }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Enable SU</label>
+                                                    <div class="controls">
+                                                        <input type="checkbox" class="input-xlarge" id="enable_su">
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Start on system startup</label>
+                                                    <div class="controls">
+                                                        <input type="checkbox" {{ pref.enable_server_on_boot }} class="input-xlarge" id="enable_system_startup">
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Start on application start</label>
+                                                    <div class="controls">
+                                                        <input type="checkbox" {{ pref.enable_server_on_app_startup }} class="input-xlarge" id="enable_app_startup">
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Lock Wi-Fi</label>
+                                                    <div class="controls">
+                                                        <input type="checkbox" {{ pref.enable_lock_wifi }} class="input-xlarge" id="enable_wifi_lock">
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Screen Always On</label>
+                                                    <div class="controls">
+                                                        <input type="checkbox" {{ pref.enable_lock_wifi }} class="input-xlarge" id="enable_screen_lock">
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <div class="controls">
+                                                        <input type="submit" name="submit" value="Save Change" class="btn">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div> <!-- profle -->
+
+                            </div><!-- tab-content-->
+                        </div> <!-- end tabbable -->
+                    </div>
+                </div><!-- content-inner -->
+            </div>
+        </div>
+    </div> <!-- end row -->
+
+</div>
+{% endblock %}

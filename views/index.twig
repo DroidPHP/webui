@@ -1,0 +1,40 @@
+{% extends 'layout.twig' %}
+{% block title %} DroidPHP Web Interface {% endblock %}
+
+{% block body %}
+
+<div class="span10">
+    <!-- standard -->
+    <div class="row-fluid">
+        <div class="span12 box">
+            <div class="box-head">
+                <h3>PHP loaded extension</h3>
+            </div>
+            <div class="box-content">
+                <div class="content-inner">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Extension name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                {% for ext in extensions %}
+                                <tr>
+                                    <td>{{ ext }}</td>
+                                </tr>
+		{% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div><!-- content-inner -->
+                    </div>
+                </div>
+            </div> <!-- end row -->
+            <!-- end of standard -->
+
+            <!-- staff -->
+            <!-- end of staff -->
+        </div>
+
+{% endblock %}
